@@ -1,0 +1,41 @@
+{
+  "name": "mkcert-cli",
+  "version": "1.0.1-2",
+  "description": "Simple cli wrapper for vite-plugin-mkcert to use outside vite context",
+  "keywords": [
+    "mkcert",
+    "certificate",
+    "https",
+    "cli"
+  ],
+  "homepage": "https://github.com/tolu/mkcert-cli#readme",
+  "bugs": {
+    "url": "https://github.com/tolu/mkcert-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tolu/mkcert-cli.git"
+  },
+  "license": "MIT",
+  "author": "Tobias Lundin",
+  "type": "module",
+  "bin": {
+    "mkcert-cli": "mkcert-cli.js"
+  },
+  "files": [
+    "mkcert-cli.js"
+  ],
+  "scripts": {
+    "test": "npx -y rome check .",
+    "fix": "npx -y rome format . --write",
+    "publish:dev": "npx -y np prerelease --tag=dev --any-branch"
+  },
+  "dependencies": {
+    "minimist": "^1.2.7",
+    "picocolors": "^1.0.0",
+    "vite-plugin-mkcert": "1.10.1"
+  },
+  "engines": {
+    "node": ">=12.20"
+  }
+}
