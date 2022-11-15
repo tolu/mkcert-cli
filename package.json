@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "test": "npx -y rome check .",
-    "publish:dev": "npx -y np prerelease --tag=dev"
+    "publish:dev": "npx -y np prerelease --tag=dev --any-branch"
   },
   "dependencies": {
     "minimist": "^1.2.7",
