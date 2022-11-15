@@ -25,12 +25,12 @@ const certFilePath = join(outDir, certFile);
 const keyFilePath = join(outDir, keyFile);
 
 console.log(`
-Running ${pc.green(`${pc.bold("mkcert-cli")}`)}
-  in ${pc.yellow(cwd)}
+Running ${pc.green(`${pc.bold("mkcert-cli")}`)}...
 `);
 
 verbose &&
   console.log(`${pc.bold("With options:")}
+  - ${pc.blue("cwd")}: ${pc.yellow(cwd)}
   - ${pc.blue("outDir")}: ${pc.yellow(outDir)}
   - ${pc.blue("host")}: ${JSON.stringify(hosts)}
   - ${pc.blue("force")}: ${force}
@@ -47,24 +47,31 @@ if (!existsSync(outDir)) {
  */
 const filesExist = existsSync(certFilePath) && existsSync(keyFilePath);
 const writeFiles = force || !filesExist;
-if (writeFiles) {
-  try {
-    /** @type { any } */
-    const { config: installMkCert } = mkcert();
-    const {
-      server: { https: { key, cert } },
-    } = await installMkCert({});
-    console.log("Writing cert files...");
-    await writeFile(keyFilePath, key, { encoding: "utf-8" });
-    await writeFile(certFilePath, cert, { encoding: "utf-8" });
-  } catch (writeErr) {
-    console.error(writeErr.toString());
-    process.exit(1);
-  }
-
-  console.log(`🎉 Created "${pc.magenta(certFile)}" and "${pc.magenta(keyFile)}"
-  in ${pc.yellow(outDir)}`);
-} else {
+if (!writeFiles) {
   console.log(`🎉 Files "${pc.magenta(certFile)}" and "${pc.magenta(keyFile)}" already exist
-  in ${pc.yellow(outDir)}`);
+    in ${pc.yellow(outDir)}`);
+  process.exit(0);
 }
+
+try {
+  /** @type { any } */
+  const { config: installMkCert } = mkcert({
+    force,
+    hosts: hosts.length ? hosts : undefined,
+    // autoUpgrade: boolean
+    // source?: SourceType;
+    // mkcertPath?: string;
+  });
+  const {
+    server: { https: { key, cert } },
+  } = await installMkCert({});
+  await writeFile(keyFilePath, key, { encoding: "utf-8" });
+  await writeFile(certFilePath, cert, { encoding: "utf-8" });
+} catch (writeErr) {
+  console.error(writeErr.toString());
+  process.exit(1);
+}
+
+console.log(`🎉 Created "${pc.magenta(certFile)}" and "${pc.magenta(keyFile)}"
+    in ${pc.yellow(outDir)}
+`);
