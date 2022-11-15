@@ -1,6 +1,6 @@
 {
   "name": "mkcert-cli",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "description": "Simple cli wrapper for vite-plugin-mkcert to use outside vite context",
   "keywords": [
     "mkcert",
