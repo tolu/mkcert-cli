@@ -14,19 +14,19 @@ Create locally trusted development certificates in default folder `$HOME/.mkcert
 
 ## Options
 
-### `outDir`
+### `--outDir`
 
 Explicitly define output directory for files
 
 ```sh
 
-> npx -y mkcert-cli -outDir .
+> npx -y mkcert-cli --outDir .
 
 # => Created "dev.cert" and "dev.key" in ./
 
 ```
 
-### `hosts`
+### `--hosts`
 
 Custom hosts, default value is `localhost` + `local ip addrs`.
 
@@ -34,7 +34,7 @@ To pass multiple values, just pass several named args.
 
 ```sh
 
-> npx -y mkcert-cli -host localhost -host my-site.local
+> npx -y mkcert-cli --host localhost --host my-site.local
 
 # => Created "dev.cert" and "dev.key" for ["localhost", "my-site.local"]
 ```
