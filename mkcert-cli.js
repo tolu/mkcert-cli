@@ -6,7 +6,7 @@ import minimist from "minimist";
 import pc from "picocolors";
 
 console.log(`
-${pc.green(`Running ${pc.bold(`mkcert-cli`)}
+${pc.green(`Running ${pc.bold("mkcert-cli")}
   in ${pc.yellow(process.cwd())}`)}
 `);
 const defaultOutDir = join(process.env.HOME, ".mkcert-cli", "certs");
