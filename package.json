@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "test": "npx -y rome check .",
+    "fix": "npx -y rome format . --write",
     "publish:dev": "npx -y np prerelease --tag=dev --any-branch"
   },
   "dependencies": {
