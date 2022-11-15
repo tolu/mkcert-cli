@@ -26,6 +26,18 @@ Explicitly define output directory for files
 
 ```
 
+### `--cert` & `--key`
+
+Set file names, default to `dev.cert` and `dev.key`
+
+```sh
+
+> npx -y mkcert-cli --outDir . --cert localhost.pem --key localhost.key
+
+# => Created "localhost.pem" and "localhost.key" in ./
+
+```
+
 ### `--hosts`
 
 Custom hosts, default value is `localhost` + `local ip addrs`.
