@@ -19,12 +19,13 @@
   "license": "MIT",
   "author": "Tobias Lundin",
   "type": "module",
-  "main": "mkcert-cli.js",
+  "main": "src/index.js",
   "bin": {
-    "mkcert-cli": "mkcert-cli.js"
+    "mkcert-cli": "cli.js"
   },
   "files": [
-    "mkcert-cli.js"
+    "cli.js",
+    "src/"
   ],
   "scripts": {
     "test": "npx -y rome check .",
@@ -34,11 +35,18 @@
     "publish:minor": "npx -y np minor"
   },
   "dependencies": {
+    "@octokit/rest": "^19.0.5",
+    "axios": "^1.1.3",
     "minimist": "^1.2.7",
     "picocolors": "^1.0.0",
-    "vite-plugin-mkcert": "1.10.1"
+    "semver": "^7.3.8"
   },
   "engines": {
     "node": ">=12.20"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^18.11.9",
+    "@types/semver": "^7.3.13"
   }
 }

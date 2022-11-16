@@ -12,7 +12,7 @@
 
 # mkcert-cli
 
-Simple CLI wrapper for [`vite-plugin-mkcert`](https://github.com/liuweiGL/vite-plugin-mkcert) to use outside of a `vite` context.
+Node cli wrapper for [`mkcert`][mkcert] based entirely on the fantastic work done in [`vite-plugin-mkcert`][vite-plugin-mkcert].
 
 ## Quick start
 
@@ -65,5 +65,9 @@ To pass multiple values, just pass several named args.
 
 ## Thanks
 
-- [vite-plugin-mkcert](https://github.com/liuweiGL/vite-plugin-mkcert)
-- [mkcert](https://github.com/FiloSottile/mkcert)
+- [vite-plugin-mkcert][vite-plugin-mkcert]
+- [mkcert][mkcert]
+
+
+[vite-plugin-mkcert]:https://github.com/liuweiGL/vite-plugin-mkcert
+[mkcert]:https://github.com/FiloSottile/mkcert
