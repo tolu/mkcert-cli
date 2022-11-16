@@ -1,5 +1,5 @@
 <p align="center">
-  <a aria-label="NPM version" href="https://www.npmjs.com/package/swr">
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/mkcert-cli">
     <img alt="" src="https://badgen.net/npm/v/mkcert-cli">
   </a>
   <a aria-label="Package size" href="https://bundlephobia.com/result?p=mkcert-cli">
