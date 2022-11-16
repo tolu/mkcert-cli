@@ -1,17 +1,16 @@
 #!/usr/bin/env node
-//@ts-check
-import { homedir } from "os";
 import { join } from "path";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import minimist from "minimist";
 import pc from "picocolors";
-import mkcert from "vite-plugin-mkcert";
+import { DATA_DIR } from "./src/utils.js";
+import { createCertificate } from "./src/index.js";
 
 /**
  * Init, read variables and create folders
  */
-const defaultOutDir = join(homedir(), ".mkcert-cli", "certs");
+const defaultOutDir = join(DATA_DIR, "certs");
 const argv = minimist(process.argv.slice(2));
 const cwd = process.cwd();
 
@@ -54,20 +53,10 @@ if (!writeFiles) {
 }
 
 try {
-  /** @type { any } */
-  const { config: installMkCert } = mkcert({
-    force,
-    hosts: hosts.length ? hosts : undefined,
-    // autoUpgrade: boolean
-    // source?: SourceType;
-    // mkcertPath?: string;
-  });
-  const {
-    server: { https: { key, cert } },
-  } = await installMkCert({});
+  const { cert, key } = await createCertificate({ force, autoUpgrade: false, keyFilePath, certFilePath });
   await writeFile(keyFilePath, key, { encoding: "utf-8" });
   await writeFile(certFilePath, cert, { encoding: "utf-8" });
-} catch (writeErr) {
+} catch (/** @type {any}*/ writeErr) {
   console.error(writeErr.toString());
   process.exit(1);
 }
