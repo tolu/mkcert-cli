@@ -19,6 +19,7 @@
   "license": "MIT",
   "author": "Tobias Lundin",
   "type": "module",
+  "main": "mkcert-cli.js",
   "bin": {
     "mkcert-cli": "mkcert-cli.js"
   },

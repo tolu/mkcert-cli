@@ -1,3 +1,15 @@
+<p align="center">
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/swr">
+    <img alt="" src="https://badgen.net/npm/v/mkcert-cli">
+  </a>
+  <a aria-label="Package size" href="https://bundlephobia.com/result?p=mkcert-cli">
+    <img alt="" src="https://badgen.net/bundlephobia/minzip/mkcert-cli">
+  </a>
+  <a aria-label="License" href="https://github.com/tolu/mkcert-cli/blob/main/LICENSE">
+    <img alt="" src="https://badgen.net/npm/license/mkcert-cli">
+  </a>
+</p>
+
 # mkcert-cli
 
 Simple CLI wrapper for [`vite-plugin-mkcert`](https://github.com/liuweiGL/vite-plugin-mkcert) to use outside of a `vite` context.
