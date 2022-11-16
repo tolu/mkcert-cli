@@ -5,7 +5,7 @@
   <a aria-label="Package size" href="https://bundlephobia.com/result?p=mkcert-cli">
     <img alt="" src="https://badgen.net/bundlephobia/minzip/mkcert-cli">
   </a>
-  <a aria-label="License" href="https://github.com/vercel/swr/blob/main/LICENSE">
+  <a aria-label="License" href="https://github.com/tolu/mkcert-cli/blob/main/LICENSE">
     <img alt="" src="https://badgen.net/npm/license/mkcert-cli">
   </a>
 </p>
