@@ -46,10 +46,11 @@ export const exec = async (cmd, options) => {
 export const DATA_DIR = join(homedir(), ".mkcert-cli");
 /**
  * @param {string} path
+ * @param {string=} baseDir
  * @returns {string}
  */
-export const resolvePath = (path) => {
-  return resolve(DATA_DIR, path);
+export const resolvePath = (path, baseDir = DATA_DIR) => {
+  return resolve(baseDir, path);
 };
 
 /**

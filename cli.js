@@ -1,27 +1,26 @@
 #!/usr/bin/env node
-import { join } from "path";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import minimist from "minimist";
 import pc from "picocolors";
-import { DATA_DIR } from "./src/utils.js";
+import { DATA_DIR, resolvePath } from "./src/utils.js";
 import { createCertificate } from "./src/index.js";
 
 /**
  * Init, read variables and create folders
  */
-const defaultOutDir = join(DATA_DIR, "certs");
+const defaultOutDir = resolvePath("certs", DATA_DIR);
 const argv = minimist(process.argv.slice(2));
 const cwd = process.cwd();
 
 const force = argv.f ?? false;
 const verbose = argv.v ?? false;
-const outDir = argv.outDir ? join(cwd, argv.outDir) : defaultOutDir;
+const outDir = argv.outDir ? resolvePath(argv.outDir, cwd) : defaultOutDir;
 const hosts = argv.host ? (Array.isArray(argv.host) ? argv.host : [argv.host]) : [];
 const certFile = argv.cert ?? "dev.cert";
 const keyFile = argv.key ?? "dev.key";
-const certFilePath = join(outDir, certFile);
-const keyFilePath = join(outDir, keyFile);
+const certFilePath = resolvePath(certFile, outDir);
+const keyFilePath = resolvePath(keyFile, outDir);
 
 console.log(`
 Running ${pc.green(`${pc.bold("mkcert-cli")}`)}...
