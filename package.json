@@ -29,7 +29,9 @@
   "scripts": {
     "test": "npx -y rome check .",
     "fix": "npx -y rome format . --write",
-    "publish:dev": "npx -y np prerelease --tag=dev --any-branch"
+    "publish:dev": "npx -y np prerelease --tag=dev --any-branch",
+    "publish:patch": "npx -y np patch",
+    "publish:minor": "npx -y np minor"
   },
   "dependencies": {
     "minimist": "^1.2.7",
