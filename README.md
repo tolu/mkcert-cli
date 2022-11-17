@@ -1,10 +1,17 @@
 <p align="center">
+
   <a aria-label="NPM version" href="https://www.npmjs.com/package/mkcert-cli">
     <img alt="" src="https://badgen.net/npm/v/mkcert-cli">
   </a>
+  
   <a aria-label="Package size" href="https://bundlephobia.com/result?p=mkcert-cli">
     <img alt="" src="https://badgen.net/bundlephobia/minzip/mkcert-cli">
   </a>
+  
+  <a aria-label="Install size" href="https://packagephobia.com/result?p=mkcert-cli@1.2.0">
+    <img alt="" src="https://packagephobia.com/badge?p=mkcert-cli@1.2.0">
+  </a>
+  
   <a aria-label="License" href="https://github.com/tolu/mkcert-cli/blob/main/LICENSE">
     <img alt="" src="https://badgen.net/npm/license/mkcert-cli">
   </a>
