@@ -1,5 +1,7 @@
 import { assert, describe, it } from "vitest";
-import { semverGreaterThan } from "../src/utils.js";
+import { pkgVersion, semverGreaterThan } from "../src/utils.js";
+//@ts-ignore - since only available from node 17
+import pkgJson from '../package.json' assert { type: "json"};
 
 describe("semverGreaterThan", () => {
   it("returns expected bool", () => {
@@ -8,3 +10,9 @@ describe("semverGreaterThan", () => {
     assert.notOk(semverGreaterThan("v1.4.4", "v1.4.4"));
   });
 });
+
+describe('pkgJson', () => {
+  it('matches asserted import value', () => {
+    assert.equal(pkgVersion, `v${pkgJson.version}`);
+  })
+})

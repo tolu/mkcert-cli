@@ -3,7 +3,7 @@ import { homedir, networkInterfaces } from "os";
 import { exec as cp_exec } from "child_process";
 import { promisify } from "util";
 import { dirname, join, resolve } from "path";
-import { existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { chmod, mkdir, writeFile as fsWriteFile } from "fs/promises";
 
 export { existsSync } from "fs";
@@ -89,3 +89,11 @@ export const ensureDirExist = async (filePath) => {
     await mkdir(dirname(filePath));
   }
 };
+
+export const pkgVersion = (() => {
+  try {
+    const pkgJson = (readFileSync('./package.json')).toString()
+    const { version } = JSON.parse( pkgJson || '');
+    return `v${version}`;
+  } catch { /* om nom nom */ }
+})();
