@@ -70,6 +70,24 @@ To pass multiple values, just pass several named args.
 # => Created "dev.cert" and "dev.key" for ["localhost", "my-site.local"]
 ```
 
+### Other flags
+
+#### `-f`: Force
+
+Force regenerate certificate files
+
+```sh
+npx -y mkcert-cli -f
+```
+
+#### `-u`: Auto upgrade mkcert bin 
+
+Install latest version of mkcert that's available before generating certificates.
+
+```sh
+npx -y mkcert-cli -u
+```
+
 ## Thanks
 
 - [vite-plugin-mkcert][vite-plugin-mkcert]
