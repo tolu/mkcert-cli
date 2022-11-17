@@ -1,6 +1,6 @@
 {
   "name": "mkcert-cli",
-  "version": "1.2.0-0",
+  "version": "1.2.0",
   "description": "Simple cli wrapper for vite-plugin-mkcert to use outside vite context",
   "keywords": [
     "mkcert",
@@ -28,18 +28,18 @@
     "src/"
   ],
   "scripts": {
-    "test": "npx -y rome check .",
+    "test": "npx -y rome check . && vitest",
+    "tdd": "vitest watch",
     "fix": "npx -y rome format . --write",
     "publish:dev": "npx -y np prerelease --tag=next --any-branch --no-release-draft",
     "publish:patch": "npx -y np patch",
     "publish:minor": "npx -y np minor"
   },
   "dependencies": {
-    "@octokit/rest": "^19.0.5",
     "axios": "^1.1.3",
     "minimist": "^1.2.7",
     "picocolors": "^1.0.0",
-    "semver": "^7.3.8"
+    "semver-compare": "^1.0.0"
   },
   "engines": {
     "node": ">=12.20"
@@ -47,6 +47,8 @@
   "devDependencies": {
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.11.9",
-    "@types/semver": "^7.3.13"
+    "@types/semver": "^7.3.13",
+    "@types/semver-compare": "^1.0.1",
+    "vitest": "^0.25.2"
   }
 }

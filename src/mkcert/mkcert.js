@@ -67,9 +67,9 @@ export class Mkcert {
     await ensureDirExist(this.KEY_FILE_PATH);
     await ensureDirExist(this.CERT_FILE_PATH);
 
-    const cmd = `${wrapInQuotes(mkcertBinary)} -install -key-file ${wrapInQuotes(this.KEY_FILE_PATH)} -cert-file ${wrapInQuotes(
-      this.CERT_FILE_PATH,
-    )} ${names}`;
+    const cmd = `${wrapInQuotes(mkcertBinary)} -install -key-file ${wrapInQuotes(
+      this.KEY_FILE_PATH,
+    )} -cert-file ${wrapInQuotes(this.CERT_FILE_PATH)} ${names}`;
 
     await exec(cmd, {
       env: {

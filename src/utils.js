@@ -9,7 +9,7 @@ import { chmod, mkdir, writeFile as fsWriteFile } from "fs/promises";
 export { existsSync } from "fs";
 export { readFile } from "fs/promises";
 
-import semver from "semver";
+import semver from "semver-compare";
 
 const getLocalV4Ips = () => {
   const interfaceDict = networkInterfaces();
@@ -78,7 +78,8 @@ export const writeFile = async (filePath, data) => {
  * @param {string} newest
  * @param {string} current
  */
-export const semverGreaterThan = (newest, current) => semver.gt(newest, current);
+export const semverGreaterThan = (newest, current) =>
+  semver(newest.replace(/^v\.?/, ""), current.replace(/^v\.?/, "")) > 0;
 
 /**
  * @param {string} filePath
