@@ -78,7 +78,8 @@ export const writeFile = async (filePath, data) => {
  * @param {string} newest
  * @param {string} current
  */
-export const semverGreaterThan = (newest, current) => semver(newest.replace(/^v\.?/, ''), current.replace(/^v\.?/, '')) > 0;
+export const semverGreaterThan = (newest, current) =>
+  semver(newest.replace(/^v\.?/, ""), current.replace(/^v\.?/, "")) > 0;
 
 /**
  * @param {string} filePath

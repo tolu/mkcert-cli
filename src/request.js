@@ -16,12 +16,14 @@ export const request = async (url, headers = {}, responseType = "json") => {
       });
       res.on("end", () => {
         switch (responseType) {
-          case 'json':
+          case "json": {
             resolve(JSON.parse(Buffer.concat(data).toString()));
             return;
-          case 'arrayBuffer':
+          }
+          case "arrayBuffer": {
             resolve(Buffer.concat(data));
             return;
+          }
         }
       });
     });
