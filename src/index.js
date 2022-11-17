@@ -19,3 +19,8 @@ export const createCertificate = async (mkcertOptions, hosts = []) => {
 
   return { hosts: uniqueHosts, key, cert };
 };
+
+// True if this file is run via "node ./src/index.js"
+if (import.meta.url.includes(process.argv[1])) {
+  // Playground
+}
