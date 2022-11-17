@@ -1,7 +1,5 @@
-import axios from "axios";
 import { writeFile } from "../utils.js";
-
-const request = axios.create();
+import { request } from "../request.js";
 
 export class Downloader {
   constructor() {}
@@ -13,7 +11,8 @@ export class Downloader {
   async download(downloadUrl, savedPath) {
     console.log("Downloading the mkcert executable from %s", downloadUrl);
 
-    const { data } = await request.get(downloadUrl, { responseType: "arraybuffer" });
+    const data = await request(downloadUrl, {}, "arrayBuffer");
+
     await writeFile(savedPath, data);
 
     console.log("The mkcert has been saved to %s", savedPath);

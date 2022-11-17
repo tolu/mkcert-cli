@@ -20,7 +20,7 @@ const fetchLatestRelease = async () => {
   /** @type {Promise<{ assets: Array<{name: string, browser_download_url: string}>, tag_name?: string }>} */
   const res = await request(
     `https://api.github.com/repos/${owner}/${repo}/releases/latest`,
-    { Accept: "application/vnd.github+json", ["User-Agent"]: "" },
+    { Accept: "application/vnd.github+json" },
     "json",
   );
   return res;
