@@ -26,13 +26,14 @@ if (argv.version) {
 
 // Display help and exit
 if (argv.h || argv.help) {
+
   console.log(`
   ${pc.bold('Usage')}
     $ npx mkcert-cli <options>
 
   ${pc.bold('Options')}
     ${pc.blue('--outDir, -o')}    Certificates output dir, defaults to ${pc.bold(defaults.dir)}
-    ${pc.blue('--host, -h')}      Add custom host, defaults to ${pc.bold('[localhost, ...IPv4]')}
+    ${pc.blue('--host')}          Add custom host, defaults to ${pc.bold('[localhost, ...IPv4]')}
     ${pc.blue('--keyFile, -k')}   Name of key file, defaults to "${pc.bold(defaults.key)}"
     ${pc.blue('--certFile, -c')}  Name of cert file, defaults to "${pc.bold(defaults.cert)}"
     ${pc.blue('--force, -f')}     Force recreate certificates
@@ -50,10 +51,10 @@ if (argv.h || argv.help) {
 
 const verbose = argv.v ?? false;
 
-const host = argv.h || argv.host;
+const host = argv.host;
 const force = (argv.force || argv.f) ?? false;
 const autoUpgrade = (argv.upgrade || argv.u) ?? false;
-const outDir = (argv.outDir || argv.o) ? resolvePath(argv.outDir, cwd) : defaults.dir;
+const outDir = (argv.outDir || argv.o) ? resolvePath(argv.outDir || argv.o, cwd) : defaults.dir;
 const hosts = host
   ? Array.isArray(host)
     ? host
@@ -67,7 +68,7 @@ const dryRun = (argv.d || argv.dryRun) ?? false;
 
 console.log(`\nRunning ${pc.green(`${pc.bold("mkcert-cli")}`)} (${pkgVersion})\n`);
 
-(verbose || dryRun) &&
+(dryRun || verbose) &&
   console.log(`${pc.bold("With options:")}
   - ${pc.blue("cwd")}: ${pc.yellow(cwd)}
   - ${pc.blue("outDir")}: ${pc.yellow(outDir)}

@@ -77,8 +77,6 @@ export class Mkcert {
         JAVA_HOME: undefined,
       },
     });
-
-    // console.log(`The certificate is saved in:\n${this.KEY_FILE_PATH}\n${this.CERT_FILE_PATH}`);
   }
 
   getCurrentMkcertVersion = async () => {
