@@ -1,7 +1,7 @@
-import { exec, existsSync, readFile, resolvePath, wrapInQuotes, semverGreaterThan, ensureDirExist } from "../utils.js";
+import { exec, existsSync, readFile, resolvePath, wrapInQuotes, semverGreaterThan, ensureDirExist } from '../utils.js';
 
-import { Downloader } from "./downloader.js";
-import { GithubSource } from "./source.js";
+import { Downloader } from './downloader.js';
+import { GithubSource } from './source.js';
 
 export class Mkcert {
   force;
@@ -28,7 +28,7 @@ export class Mkcert {
 
     this.source = new GithubSource();
 
-    this.mkcertSavedPath = resolvePath(process.platform === "win32" ? "mkcert.exe" : "mkcert");
+    this.mkcertSavedPath = resolvePath(process.platform === 'win32' ? 'mkcert.exe' : 'mkcert');
   }
 
   async getMkcertBinary() {
@@ -56,7 +56,7 @@ export class Mkcert {
    * @param {string[]} hosts
    */
   async createCertificate(hosts) {
-    const names = hosts.join(" ");
+    const names = hosts.join(' ');
 
     const mkcertBinary = await this.getMkcertBinary();
 
@@ -83,7 +83,7 @@ export class Mkcert {
     const mkcertBinary = await this.getMkcertBinary();
 
     if (!mkcertBinary) {
-      console.error("Mkcert does not exist, unable to get current version...");
+      console.error('Mkcert does not exist, unable to get current version...');
       return null;
     }
 
@@ -119,20 +119,20 @@ export class Mkcert {
     const sourceInfo = await this.source.getSourceInfo();
 
     if (!sourceInfo) {
-      console.error("Failed to request mkcert information, please check your network");
+      console.error('Failed to request mkcert information, please check your network');
       return undefined;
     }
 
-    console.log("getSourceInfo", sourceInfo);
+    console.log('getSourceInfo', sourceInfo);
     return sourceInfo;
   }
   async initMkcert() {
     const sourceInfo = await this.getSourceInfo();
 
-    console.log("The mkcert does not exist, download it now");
+    console.log('The mkcert does not exist, download it now');
 
     if (!sourceInfo) {
-      console.error("Can not obtain download information of mkcert, init skipped");
+      console.error('Can not obtain download information of mkcert, init skipped');
       return;
     }
 
@@ -140,11 +140,11 @@ export class Mkcert {
   }
 
   async upgradeMkcert() {
-    console.log("Upgrade mkcert...");
+    console.log('Upgrade mkcert...');
     const sourceInfo = await this.getSourceInfo();
 
     if (!sourceInfo) {
-      console.error("Can not obtain download information of mkcert, update skipped");
+      console.error('Can not obtain download information of mkcert, update skipped');
       return;
     }
 
@@ -153,7 +153,7 @@ export class Mkcert {
     if (shouldUpgrade) {
       await this.downloadMkcert(sourceInfo.downloadUrl, this.mkcertSavedPath);
     } else {
-      console.log("Already at latest version: ", current);
+      console.log('Already at latest version: ', current);
     }
   }
 
@@ -172,7 +172,7 @@ export class Mkcert {
    */
   async renew(hosts) {
     if (this.force || !(existsSync(this.CERT_FILE_PATH) && existsSync(this.KEY_FILE_PATH))) {
-      console.log("Certificate is forced to regenerate");
+      console.log('Certificate is forced to regenerate');
 
       await this.regenerate(hosts);
     }
