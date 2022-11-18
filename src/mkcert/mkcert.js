@@ -1,4 +1,6 @@
-import { exec, existsSync, readFile, resolvePath, wrapInQuotes, semverGreaterThan, ensureDirExist } from '../utils.js';
+import { execa } from 'execa';
+import pc from 'picocolors';
+import { existsSync, readFile, resolvePath, wrapInQuotes, semverGreaterThan, ensureDirExist } from '../utils.js';
 
 import { Downloader } from './downloader.js';
 import { GithubSource } from './source.js';
@@ -61,21 +63,20 @@ export class Mkcert {
     const mkcertBinary = await this.getMkcertBinary();
 
     if (!mkcertBinary) {
-      console.log(`Mkcert does not exist, unable to generate certificate for ${names}`);
+      throw new Error(`Mkcert does not exist, unable to generate certificate for ${names}`);
     }
 
     await ensureDirExist(this.KEY_FILE_PATH);
     await ensureDirExist(this.CERT_FILE_PATH);
 
-    const cmd = `${wrapInQuotes(mkcertBinary)} -install -key-file ${wrapInQuotes(
-      this.KEY_FILE_PATH,
-    )} -cert-file ${wrapInQuotes(this.CERT_FILE_PATH)} ${names}`;
-
-    await exec(cmd, {
+    await execa(mkcertBinary, ['-install', '-key-file', this.KEY_FILE_PATH, '-cert-file', this.CERT_FILE_PATH, ...hosts], {
       env: {
         ...process.env,
         JAVA_HOME: undefined,
       },
+      // TODO: enabled when --verbose
+      // stdout: process.stdout,
+      // stderr: process.stderr
     });
   }
 
@@ -87,32 +88,22 @@ export class Mkcert {
       return null;
     }
 
-    const { stdout } = await exec(`"${mkcertBinary}" --version`, {
+    const { stdout } = await execa(mkcertBinary, ['--version'], {
       env: {
         ...process.env,
         JAVA_HOME: undefined,
       },
     });
-    const version = stdout.trim();
-
-    return version;
+    return stdout;
   };
-
-  /**
-   * @param {string[]} hosts
-   */
-  async regenerate(hosts) {
-    await this.createCertificate(hosts);
-  }
 
   async init() {
     if (!this.checkMkcert()) {
       await this.initMkcert();
     } else if (this.autoUpgrade) {
       await this.upgradeMkcert();
-    } else {
-      console.log(`Running with mkcert ${await this.getCurrentMkcertVersion()}`);
     }
+    console.log(`${pc.green('mkcert')}@${await this.getCurrentMkcertVersion()}\n`);
   }
 
   async getSourceInfo() {
@@ -123,7 +114,6 @@ export class Mkcert {
       return undefined;
     }
 
-    console.log('getSourceInfo', sourceInfo);
     return sourceInfo;
   }
   async initMkcert() {
@@ -140,7 +130,6 @@ export class Mkcert {
   }
 
   async upgradeMkcert() {
-    console.log('Upgrade mkcert...');
     const sourceInfo = await this.getSourceInfo();
 
     if (!sourceInfo) {
@@ -151,9 +140,10 @@ export class Mkcert {
     const current = await this.getCurrentMkcertVersion();
     const shouldUpgrade = !current || semverGreaterThan(sourceInfo.version, current);
     if (shouldUpgrade) {
+      console.log(`Upgrade mkcert: ${current} => ${sourceInfo.version}\n`);
       await this.downloadMkcert(sourceInfo.downloadUrl, this.mkcertSavedPath);
     } else {
-      console.log('Already at latest version: ', current);
+      console.log(`Already using latest:`);
     }
   }
 
@@ -172,9 +162,7 @@ export class Mkcert {
    */
   async renew(hosts) {
     if (this.force || !(existsSync(this.CERT_FILE_PATH) && existsSync(this.KEY_FILE_PATH))) {
-      console.log('Certificate is forced to regenerate');
-
-      await this.regenerate(hosts);
+      await this.createCertificate(hosts);
     }
   }
 

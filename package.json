@@ -36,6 +36,7 @@
     "publish:minor": "npx -y np minor"
   },
   "dependencies": {
+    "execa": "^6.1.0",
     "minimist": "^1.2.7",
     "picocolors": "^1.0.0",
     "semver-compare": "^1.0.0"

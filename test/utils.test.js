@@ -1,9 +1,10 @@
 import { assert, describe, it, beforeEach } from 'vitest';
-import { exec, existsSync, getAbsolutePath, pkgVersion, semverGreaterThan } from '../src/utils.js';
+import { existsSync, getAbsolutePath, pkgVersion, semverGreaterThan } from '../src/utils.js';
 //@ts-ignore - since only available from node 17
 import pkgJson from '../package.json' assert { type: 'json' };
 import { dirname, join, resolve } from 'path';
 import { homedir } from 'os';
+import { execa, execaNode } from 'execa';
 
 describe('semverGreaterThan', () => {
   it('returns expected bool', () => {
@@ -20,15 +21,14 @@ describe('pkgJson', () => {
 
   it('cli.js --version, also works from random directory', async () => {
     const cliPathAbs = getAbsolutePath('../cli.js', import.meta.url);
-    const cmd = `node ${cliPathAbs} --version`;
-    const { stdout } = await exec(cmd, { cwd: homedir(), env: { ...process.env } });
-    assert.equal(pkgVersion, `${stdout.trim()}`);
+    const { stdout } = await execaNode(cliPathAbs, ['--version'], { cwd: homedir(), env: { ...process.env } });
+    assert.equal(pkgVersion, `${stdout}`);
   });
 });
 
 const testCertFolder = 'tstCertFolder';
-const cmd = `node ${join(dirname(import.meta.url), '../cli.js').replace(/^file:/, '')}`;
-const rmTestDir = async () => await exec(`rm -rf ${testCertFolder}`, {});
+const cliJSFilePath = getAbsolutePath('../cli.js', import.meta.url);
+const rmTestDir = async () => await execa(`rm`, ['-rf', testCertFolder]);
 
 describe('cli', () => {
   beforeEach(async () => {
@@ -36,22 +36,19 @@ describe('cli', () => {
   });
 
   it('"--outDir, -o" sets output dir', async () => {
-    await exec(`${cmd} --outDir ${testCertFolder}`, {});
+    await execaNode(cliJSFilePath, ['-v', '--outDir', testCertFolder]);
     assert.ok(existsSync(`./${testCertFolder}/dev.key`));
     assert.ok(existsSync(`./${testCertFolder}/dev.cert`));
     await rmTestDir();
-    await exec(`${cmd} --o ${testCertFolder}`, {});
+    await execaNode(cliJSFilePath, ['-v', '-o', testCertFolder]);
     assert.ok(existsSync(`./${testCertFolder}/dev.key`));
     assert.ok(existsSync(`./${testCertFolder}/dev.cert`));
   });
 
   it('"--host" sets custom host', async () => {
-    const { stdout: output1 } = await exec(
-      `${cmd} --host mkcert-online.com --host mkcert2-online.com -o ${testCertFolder} -d`,
-      {},
-    );
-    assert.ok(output1.includes('mkcert-online.com'), output1);
-    assert.ok(output1.includes('mkcert2-online.com'), output1);
+    const { stdout } = await execaNode(cliJSFilePath, ['--host', 'mkcert-online.com', '--host', 'mkcert2-online.com', '-o', testCertFolder, '-d']);
+    assert.include(stdout, 'mkcert-online.com');
+    assert.include(stdout, 'mkcert2-online.com');
   });
   it.todo('"--keyFile, -k" sets key filename', async () => {});
   it.todo('"--certFile, -c" sets cert filename', async () => {});
