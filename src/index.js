@@ -1,5 +1,5 @@
-import { Mkcert } from "./mkcert/mkcert.js";
-import { getDefaultHosts } from "./utils.js";
+import { Mkcert } from './mkcert/mkcert.js';
+import { getDefaultHosts } from './utils.js';
 
 /**
  * @param {string[]=} hosts

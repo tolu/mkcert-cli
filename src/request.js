@@ -1,9 +1,9 @@
-import https from "https";
-import { pkgVersion } from "./utils.js";
+import https from 'https';
+import { pkgVersion } from './utils.js';
 
 const defaultHeaders = {
-  Accept: "application/json, text/plain, */*",
-  ["User-Agent"]: `mkcert-cli/${pkgVersion}`,
+  Accept: 'application/json, text/plain, */*',
+  ['User-Agent']: `mkcert-cli/${pkgVersion}`,
 };
 const MAX_REDIRECTS = 4;
 
@@ -14,7 +14,7 @@ const MAX_REDIRECTS = 4;
  * @param {'json' | 'arrayBuffer'} responseType
  * @returns {Promise<any>}
  */
-export const request = async (url, customHeaders = {}, responseType = "json", _redirect = 0) => {
+export const request = async (url, customHeaders = {}, responseType = 'json', _redirect = 0) => {
   const headers = { ...defaultHeaders, ...customHeaders };
   return new Promise((resolve) => {
     /** @type {Uint8Array[]} */
@@ -31,19 +31,19 @@ export const request = async (url, customHeaders = {}, responseType = "json", _r
         resolve(response);
       }
 
-      res.on("data", (chunk) => {
+      res.on('data', (chunk) => {
         responseBuffer.push(chunk);
-        if (url.includes("/download/")) {
-          console.log("on(data): ", chunk);
+        if (url.includes('/download/')) {
+          console.log('on(data): ', chunk);
         }
       });
-      res.on("end", () => {
+      res.on('end', () => {
         const arrayBuffer = Buffer.concat(responseBuffer);
         switch (responseType) {
-          case "json": {
+          case 'json': {
             return resolve(JSON.parse(arrayBuffer.toString()));
           }
-          case "arrayBuffer": {
+          case 'arrayBuffer': {
             return resolve(arrayBuffer);
           }
         }
