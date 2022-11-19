@@ -28,8 +28,7 @@
     "src/"
   ],
   "scripts": {
-    "test": "npx -y rome check . && vitest run",
-    "tdd": "vitest",
+    "test": "npx -y rome check . && node --test | npx tap-spec",
     "fix": "npx -y rome format . --write",
     "publish:dev": "npx -y np prerelease --tag=next --any-branch --no-release-draft",
     "publish:patch": "npx -y np patch",
@@ -48,6 +47,7 @@
     "@types/node": "^18.11.9",
     "@types/semver": "^7.3.13",
     "@types/semver-compare": "^1.0.1",
+    "tap-spec": "^5.0.0",
     "vitest": "^0.25.2"
   }
 }

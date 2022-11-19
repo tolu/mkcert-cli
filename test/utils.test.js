@@ -1,4 +1,5 @@
-import { assert, describe, it, beforeEach } from 'vitest';
+import { describe, it, beforeEach } from 'node:test';
+import assert from 'node:assert/strict';
 import { exec, existsSync, getAbsolutePath, pkgVersion, semverGreaterThan } from '../src/utils.js';
 //@ts-ignore - since only available from node 17
 import pkgJson from '../package.json' assert { type: 'json' };
@@ -8,8 +9,8 @@ import { homedir } from 'os';
 describe('semverGreaterThan', () => {
   it('returns expected bool', () => {
     assert.ok(semverGreaterThan('v1.4.4', 'v.1.4.3'));
-    assert.notOk(semverGreaterThan('v1.4.3', 'v.1.4.4'));
-    assert.notOk(semverGreaterThan('v1.4.4', 'v1.4.4'));
+    assert.ok(!semverGreaterThan('v1.4.3', 'v.1.4.4'));
+    assert.ok(!semverGreaterThan('v1.4.4', 'v1.4.4'));
   });
 });
 
@@ -53,6 +54,6 @@ describe('cli', () => {
     assert.ok(output1.includes('mkcert-online.com'), output1);
     assert.ok(output1.includes('mkcert2-online.com'), output1);
   });
-  it.todo('"--keyFile, -k" sets key filename', async () => {});
-  it.todo('"--certFile, -c" sets cert filename', async () => {});
+  it('"--keyFile, -k" sets key filename', { todo: true }, async () => {});
+  it('"--certFile, -c" sets cert filename', { todo: true }, async () => {});
 });
