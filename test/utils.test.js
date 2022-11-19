@@ -7,7 +7,7 @@ import { homedir } from 'os';
 
 describe('--dryRun', () => {
   it('more of a debug print session for CI', async () => {
-    const cliPathAbs = getAbsolutePath('../cli.js', import.meta.url);
+    const cliPathAbs = resolve('../cli.js');
     const cmd = `node ${cliPathAbs} --dryRun`;
     console.log('PLEASE READ THIS', {
       cwd: process.cwd(),
