@@ -9,7 +9,12 @@ describe('--dryRun', () => {
   it('more of a debug print session for CI', async () => {
     const cliPathAbs = getAbsolutePath('../cli.js', import.meta.url);
     const cmd = `node ${cliPathAbs} --dryRun`;
-    console.log('Running', cmd, new URL('..cli.js', import.meta.url).toString());
+    console.log('PLEASE READ THIS', {
+      cwd: process.cwd(),
+      cmd,
+      filePathURL: new URL('..cli.js', import.meta.url).toString(),
+      filePathResolve: resolve('../cli.js'),
+    });
     const { stdout } = await exec(cmd, { cwd: homedir(), env: { ...process.env } });
     console.log(`
     ${stdout}
