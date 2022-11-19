@@ -5,6 +5,17 @@ import pkgJson from '../package.json' assert { type: 'json' };
 import { dirname, join, resolve } from 'path';
 import { homedir } from 'os';
 
+describe('--dryRun', () => {
+  it('more of a debug print session for CI', async () => {
+    const cliPathAbs = getAbsolutePath('../cli.js', import.meta.url);
+    const cmd = `node ${cliPathAbs} --dryRun`;
+    const { stdout } = await exec(cmd, { cwd: homedir(), env: { ...process.env } });
+    console.log(`
+    ${stdout}
+    `);
+  });
+});
+
 describe('semverGreaterThan', () => {
   it('returns expected bool', () => {
     assert.ok(semverGreaterThan('v1.4.4', 'v.1.4.3'));
