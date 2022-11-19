@@ -5,15 +5,19 @@ import pkgJson from '../package.json' assert { type: 'json' };
 import { dirname, join, resolve } from 'path';
 import { homedir } from 'os';
 
+const cliPath = resolve(join(dirname(new URL(import.meta.url).pathname), '../cli.js'));
+
 describe('--dryRun', () => {
   it('more of a debug print session for CI', async () => {
-    const cliPathAbs = resolve('../cli.js');
-    const cmd = `node ${cliPathAbs} --dryRun`;
+    
+    const cmd = `node ${cliPath} --dryRun`;
     console.log('PLEASE READ THIS', {
       cwd: process.cwd(),
-      cmd,
+      cliPath,
+      importURL: import.meta.url,
       filePathURL: new URL('..cli.js', import.meta.url).toString(),
       filePathResolve: resolve('../cli.js'),
+      resolveJoinDirname: resolve(join(dirname(import.meta.url), '../cli.js')),
     });
     const { stdout } = await exec(cmd, { cwd: homedir(), env: { ...process.env } });
     console.log(`
@@ -36,15 +40,14 @@ describe.skip('pkgJson', () => {
   });
 
   it('cli.js --version, also works from random directory', async () => {
-    const cliPathAbs = getAbsolutePath('../cli.js', import.meta.url);
-    const cmd = `node ${cliPathAbs} --version`;
+    const cmd = `node ${cliPath} --version`;
     const { stdout } = await exec(cmd, { cwd: homedir(), env: { ...process.env } });
     assert.equal(pkgVersion, `${stdout.trim()}`);
   });
 });
 
 const testCertFolder = 'tstCertFolder';
-const cmd = `node ${join(dirname(import.meta.url), '../cli.js').replace(/^file:/, '')}`;
+const cmd = `node ${cliPath}`;
 const rmTestDir = async () => await exec(`rm -rf ${testCertFolder}`, {});
 
 describe.skip('cli', () => {
