@@ -9,6 +9,7 @@ describe('--dryRun', () => {
   it('more of a debug print session for CI', async () => {
     const cliPathAbs = getAbsolutePath('../cli.js', import.meta.url);
     const cmd = `node ${cliPathAbs} --dryRun`;
+    console.log('Running', cmd, new URL('..cli.js', import.meta.url).toString());
     const { stdout } = await exec(cmd, { cwd: homedir(), env: { ...process.env } });
     console.log(`
     ${stdout}
@@ -16,7 +17,7 @@ describe('--dryRun', () => {
   });
 });
 
-describe('semverGreaterThan', () => {
+describe.skip('semverGreaterThan', () => {
   it('returns expected bool', () => {
     assert.ok(semverGreaterThan('v1.4.4', 'v.1.4.3'));
     assert.notOk(semverGreaterThan('v1.4.3', 'v.1.4.4'));
@@ -24,7 +25,7 @@ describe('semverGreaterThan', () => {
   });
 });
 
-describe('pkgJson', () => {
+describe.skip('pkgJson', () => {
   it('matches asserted import value', () => {
     assert.equal(pkgVersion, `v${pkgJson.version}`);
   });
@@ -41,7 +42,7 @@ const testCertFolder = 'tstCertFolder';
 const cmd = `node ${join(dirname(import.meta.url), '../cli.js').replace(/^file:/, '')}`;
 const rmTestDir = async () => await exec(`rm -rf ${testCertFolder}`, {});
 
-describe('cli', () => {
+describe.skip('cli', () => {
   beforeEach(async () => {
     await rmTestDir();
   });
