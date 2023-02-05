@@ -1,10 +1,13 @@
 #!/usr/bin/env node
+
 import { existsSync } from 'fs';
+
 import { mkdir, writeFile } from 'fs/promises';
 import minimist from 'minimist';
 import pc from 'picocolors';
-import { DATA_DIR, resolvePath, readFile, pkgVersion } from './src/utils.js';
+
 import { createCertificate } from './src/index.js';
+import { DATA_DIR, pkgVersion, resolvePath } from './src/utils.js';
 
 /**
  * Init, read variables and create folders
@@ -93,12 +96,15 @@ if (!writeFiles) {
 }
 
 try {
-  const { cert, key } = await createCertificate({
-    force,
-    autoUpgrade,
-    keyFilePath,
-    certFilePath,
-  });
+  const { cert, key } = await createCertificate(
+    {
+      force,
+      autoUpgrade,
+      keyFilePath,
+      certFilePath,
+    },
+    hosts
+  );
   await writeFile(keyFilePath, key, { encoding: 'utf-8' });
   await writeFile(certFilePath, cert, { encoding: 'utf-8' });
 } catch (/** @type {any}*/ writeErr) {
