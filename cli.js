@@ -69,6 +69,7 @@ console.log(`\nRunning ${pc.green(`${pc.bold('mkcert-cli')}`)} (${pkgVersion})\n
 (dryRun || verbose) &&
   console.log(`${pc.bold('With options:')}
   - ${pc.blue('cwd')}: ${pc.yellow(cwd)}
+  - ${pc.blue('dataDir')}: ${pc.yellow(DATA_DIR)}
   - ${pc.blue('outDir')}: ${pc.yellow(outDir)}
   - ${pc.blue('hosts')}: ${JSON.stringify(hosts)}
   - ${pc.blue('cert')}: ${certFile}
